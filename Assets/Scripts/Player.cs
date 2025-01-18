@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using Unity.Burst.CompilerServices;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -250,6 +251,12 @@ public class Player : MonoBehaviour
                     if (hitDetected && hit.collider.CompareTag("Enemy"))
                     {
                         StartCoroutine(ShootCor(hit.point, hit.collider, true, pistolfireRate, pistolDamage)) ;
+                    }
+                    else if (hitDetected && hit.collider.CompareTag("Object"))
+                    {
+                        MoveByHit movebyhit = hit.collider.GetComponent<MoveByHit>();
+
+                        movebyhit.PushObject((hit.point - gunholder.position).normalized);
                     }
                     else
                     {
