@@ -302,6 +302,12 @@ public class Player : MonoBehaviour
                         {
                             StartCoroutine(ShootCor(hit4.point, hit4.collider, true, shotgunFireRate, shotgunDamage));
                         }
+                        else if (hitDetected && hit4.collider.CompareTag("Object"))
+                        {
+                            MoveByHit movebyhit = hit4.collider.GetComponent<MoveByHit>();
+
+                            movebyhit.PushObject((hit4.point - gunholder.position).normalized);
+                        }
                         else
                         {
                             // Если не попали в врага, просто вызываем ShootCor с параметром false
@@ -335,6 +341,12 @@ public class Player : MonoBehaviour
                     {
                         StartCoroutine(ShootCor(hit2.point, hit2.collider, true, submachinegunFireRate, submachinegunDamage));
                     }
+                    else if (hitDetected && hit2.collider.CompareTag("Object"))
+                    {
+                        MoveByHit movebyhit = hit2.collider.GetComponent<MoveByHit>();
+
+                        movebyhit.PushObject((hit2.point - gunholder.position).normalized);
+                    }
                     else
                     {
                         // Если не попали в врага, просто вызываем ShootCor с параметром false
@@ -363,6 +375,12 @@ public class Player : MonoBehaviour
                     if (hitDetected && hit3.collider.CompareTag("Enemy"))
                     {
                         StartCoroutine(ShootCor(hit3.point, hit3.collider, true, rifleFireRate, rifleDamage));
+                    }
+                    else if (hitDetected && hit3.collider.CompareTag("Object"))
+                    {
+                        MoveByHit movebyhit = hit3.collider.GetComponent<MoveByHit>();
+
+                        movebyhit.PushObject((hit3.point - gunholder.position).normalized);
                     }
                     else
                     {
