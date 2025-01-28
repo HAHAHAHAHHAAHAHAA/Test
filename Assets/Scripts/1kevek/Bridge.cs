@@ -1,35 +1,54 @@
 using UnityEngine;
 using static ActionScript;
+using UnityEngine.AI;
+using Unity.AI.Navigation;
+using System.Collections;
+
 
 public class Bridge : BaseAction
-{ // Угол, к которому нужно повернуться
-    public float rotationSpeed = 2f; // Скорость вращения
+{
+    public float rotationSpeed = 2f;
     private int count = 0;
+    public NavMeshSurface navMeshSurface; // Р”РѕР±Р°РІРёР»Рё РїРµСЂРµРјРµРЅРЅСѓСЋ РґР»СЏ NavMeshSurface
+    private bool isCoroutineStarted = false; // Р¤Р»Р°Рі РґР»СЏ РїСЂРµРґРѕС‚РІСЂР°С‰РµРЅРёСЏ Р·Р°РїСѓСЃРєР° РєРѕСЂСѓС‚РёРЅС‹ РЅРµСЃРєРѕР»СЊРєРѕ СЂР°Р·.
     public override void ExecuteAction()
     {
         count++;
     }
-    private void Update()
+
+    private void FixedUpdate()
     {
         if (count == 1)
         {
             float currentAngle = transform.eulerAngles.x;
-
-            // Плавно интерполируем угол
             float newAngle = Mathf.LerpAngle(currentAngle, -45, rotationSpeed * Time.deltaTime);
-
-            // Применяем новый угол к объекту
             transform.eulerAngles = new Vector3(newAngle, transform.eulerAngles.y, transform.eulerAngles.z);
         }
-        if(count == 2)
+        if (count == 2)
         {
+            if (!isCoroutineStarted)
+            {
+                StartCoroutine(RebuildNavMeshWithDelay()); // Р—Р°РїСѓСЃРєР°РµРј РєРѕСЂСѓС‚РёРЅСѓ
+                isCoroutineStarted = true;
+            }
             float currentAngle = transform.eulerAngles.x;
-
-            // Плавно интерполируем угол
             float newAngle = Mathf.LerpAngle(currentAngle, -91f, rotationSpeed * Time.deltaTime);
-
-            // Применяем новый угол к объекту
             transform.eulerAngles = new Vector3(newAngle, transform.eulerAngles.y, transform.eulerAngles.z);
+
         }
+    }
+
+    IEnumerator RebuildNavMeshWithDelay()
+    {
+        yield return new WaitForSeconds(3f); // Р¶РґРµРј 3 СЃРµРєСѓРЅРґС‹
+        RebuildNavMesh(); // РїРµСЂРµСЃС‚СЂР°РёРІР°РµРј РЅР°РІРјРµС€
+        enabled = false; // РѕС‚РєР»СЋС‡Р°РµРј СЃРєСЂРёРїС‚
+    }
+
+
+    private void RebuildNavMesh()
+    {
+        navMeshSurface.BuildNavMesh();
+        Debug.Log("NavMesh РїРµСЂРµСЃС‚СЂРѕРµРЅ!");
     }
 }

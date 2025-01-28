@@ -29214,6 +29214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 2
+  navMeshSurface: {fileID: 0}
 --- !u!65 &598040552
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -75897,63 +75898,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1546075595}
   m_Mesh: {fileID: -125435165217083709, guid: b869ea6b96cbd2845926ad91d43ed9b4, type: 3}
---- !u!1 &1547565184
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1547565186}
-  - component: {fileID: 1547565185}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1547565185
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1547565184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6eeb5dc026fdf4b488bc7ae0138ab719, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SerializedVersion: 1
-  m_AgentTypeID: 0
-  m_StartPoint: {x: 0, y: 0, z: 6.1}
-  m_EndPoint: {x: 0, y: 0, z: 0}
-  m_StartTransform: {fileID: 0}
-  m_EndTransform: {fileID: 0}
-  m_Activated: 1
-  m_Width: 4.12
-  m_CostModifier: 1
-  m_IsOverridingCost: 0
-  m_Bidirectional: 1
-  m_AutoUpdatePosition: 1
-  m_Area: 0
---- !u!4 &1547565186
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1547565184}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.70710707, y: -0.00000036289245, z: -0.00000039427263, w: 0.7071066}
-  m_LocalPosition: {x: -0.03, y: 0.699, z: 0.09}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3669035250935690744}
-  m_LocalEulerAnglesHint: {x: 90, y: 180, z: 180}
 --- !u!1 &1547593668
 GameObject:
   m_ObjectHideFlags: 0
@@ -109496,8 +109440,7 @@ Transform:
   m_LocalPosition: {x: 2.0970001, y: -0.12900001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1547565186}
+  m_Children: []
   m_Father: {fileID: 1358409490}
   m_LocalEulerAnglesHint: {x: -15, y: 0, z: -180}
 --- !u!1 &3676624721921790048
@@ -111123,6 +111066,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 2
+  navMeshSurface: {fileID: 7688485375190386224}
 --- !u!23 &9179311567860391281
 MeshRenderer:
   m_ObjectHideFlags: 0
