@@ -146,11 +146,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ClothModule">
-<<<<<<< Updated upstream
       <HintPath>D:\UnityEditors\6000.0.26f1\Editor\Data\Managed\UnityEngine\UnityEngine.ClothModule.dll</HintPath>
-=======
-      <HintPath>C:\Program Files\Unity\Hub\Editor\6000.0.26f1\Editor\Data\Managed\UnityEngine\UnityEngine.ClothModule.dll</HintPath>
->>>>>>> Stashed changes
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ContentLoadModule">
@@ -382,11 +378,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.VideoModule">
-<<<<<<< Updated upstream
       <HintPath>D:\UnityEditors\6000.0.26f1\Editor\Data\Managed\UnityEngine\UnityEngine.VideoModule.dll</HintPath>
-=======
-      <HintPath>C:\Program Files\Unity\Hub\Editor\6000.0.26f1\Editor\Data\Managed\UnityEngine\UnityEngine.VideoModule.dll</HintPath>
->>>>>>> Stashed changes
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.WindModule">
@@ -590,19 +582,11 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Android.Types">
-<<<<<<< Updated upstream
       <HintPath>D:\UnityEditors\6000.0.26f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Types.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Android.Gradle">
       <HintPath>D:\UnityEditors\6000.0.26f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Gradle.dll</HintPath>
-=======
-      <HintPath>C:\Program Files\Unity\Hub\Editor\6000.0.26f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Types.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.Android.Gradle">
-      <HintPath>C:\Program Files\Unity\Hub\Editor\6000.0.26f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Gradle.dll</HintPath>
->>>>>>> Stashed changes
       <Private>False</Private>
     </Reference>
     <Reference Include="netstandard">
