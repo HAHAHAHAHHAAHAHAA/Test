@@ -124,11 +124,11 @@ public class Player : MonoBehaviour
                 ammo_UI.text = currentRifleAmmo.ToString() + "/" + rifleAmmo;
                 break;
         }
-        if (isShooting&&shootButton.active ==true)
+        if (isShooting&&shootButton.gameObject.activeSelf ==true)
         {
             Shoot();
         }
-        if (shootButton.active == false)
+        if (shootButton.gameObject.activeSelf == false)
         {
             isShooting = false;
         }
