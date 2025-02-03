@@ -51,8 +51,4 @@ public class Bridge : BaseAction
         navMeshSurface.BuildNavMesh();
         Debug.Log("NavMesh перестроен!");
     }
-<<<<<<< Updated upstream
 }
-=======
-}
->>>>>>> Stashed changes
