@@ -4,6 +4,9 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] private Collider colider;
+    [SerializeField] string RunType;
+    [SerializeField] Animator animator;
     private Player player;
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private bool TakingTimeToNextBite;
@@ -11,8 +14,12 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int biteDamage = 5;
     private Vector3 velocity = Vector3.zero;
     public float smoothTime = 0.3f;
+    private int deathtype;
+
+    private bool dead = false;
     private void Start()
     {
+        deathtype = Random.Range(1, 3);
         player = FindObjectOfType<Player>();
         agent.updatePosition = false;
     }
@@ -20,7 +27,7 @@ public class Enemy : MonoBehaviour
     {
         float dist = Vector3.Distance(transform.position, player.playerPos);
 
-        if (dist < 22f)
+        if (dist < 22f&&!dead)
         {
             // Устанавливаем цель для NavMeshAgent
             agent.SetDestination(player.playerPos);
@@ -30,14 +37,22 @@ public class Enemy : MonoBehaviour
 
             // Используем SmoothDamp для плавного перемещения
             transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
+            animator.SetBool(RunType,true);
         }
-        if (dist <= 1.2f&&!TakingTimeToNextBite)
+        else
+        {
+            animator.SetBool(RunType, false);
+        }
+        if (dist <= 1.2f&&!TakingTimeToNextBite&&!dead)
         {
             StartCoroutine(Bite());
         }
         if (health < 0)
         {
-            Destroy(this.gameObject);
+            colider.enabled = false;
+            dead = true;
+            animator.SetInteger("Death", deathtype);
+            Destroy(this.gameObject,4f);
         }
     }
     public void Damage(int dmg)
