@@ -7,6 +7,8 @@ using Image = UnityEngine.UI.Image;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] Animator animator;
+
     [SerializeField] private GameObject shootButton;
     public Vector3 playerPos;
     [SerializeField] private int health=25;
@@ -174,16 +176,22 @@ public class Player : MonoBehaviour
             lineRenderer.SetPosition(0, gunholder.position);
             lineRenderer.SetPosition(1, lineEnd.position);
             shootButton.SetActive(true);
+            animator.SetBool("Run", false);
         }
         // Движение
         if (movementDirection != Vector3.zero && aiming == false)
         {
+            animator.SetBool("Run", true);
             if (rotate == false)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
             }
             rb.MovePosition(transform.position + movementDirection * moveSpeed * Time.fixedDeltaTime);
+        }
+        else
+        {
+            animator.SetBool("Run", false);
         }
     }
     public void SwitchGun(string gunType)
