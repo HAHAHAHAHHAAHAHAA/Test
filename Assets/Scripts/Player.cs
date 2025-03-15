@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     private LineRenderer lineRenderer;
     private bool TakingTimeToNextShot;
     private bool reloading = false;
+    private bool running=false;
     [SerializeField] private ParticleSystem explosionParticles;
     [SerializeField] private ParticleSystem bloodParticles;
     [SerializeField] private Transform gunholder;
@@ -90,6 +91,7 @@ public class Player : MonoBehaviour
     }
     private void Start()
     {
+        SwitchGun("pistol");
         lineRenderer = GetComponent<LineRenderer>();
         if (lineRenderer == null)
         {
@@ -164,6 +166,7 @@ public class Player : MonoBehaviour
         }
         if (rotationDirection != Vector3.zero)
         {
+            running = false;
             aiming = true;
             animator.SetBool("Aiming", true);
             background.gameObject.SetActive(false);
@@ -184,8 +187,9 @@ public class Player : MonoBehaviour
 
         }
         // Движение
-        if (movementDirection != Vector3.zero && aiming == false)
+        if (movementDirection != Vector3.zero && aiming == false&&!reloading)
         {
+            running = true;
             animator.SetBool("Run", true);
             if (rotate == false)
             {
@@ -196,6 +200,7 @@ public class Player : MonoBehaviour
         }
         else
         {
+            running=false;
             animator.SetBool("Run", false);
         }
     }
@@ -251,7 +256,33 @@ public class Player : MonoBehaviour
     }
     public void Reload()
     {
-        StartCoroutine(Reloading(gun));
+        switch (gun)
+        {
+            case "pistol":
+                if (!running && !reloading&&(currentPistolAmmo!=pistolMaxAmmo&pistolAmmo!=0))
+                {
+                    StartCoroutine(Reloading(gun));
+                }
+                break;
+            case "shotgun":
+                if (!running && !reloading && (currentShotgunAmmo != shotgunMaxAmmo & shotgunAmmo != 0))
+                {
+                    StartCoroutine(Reloading(gun));
+                }
+                break;
+            case "submachinegun":
+                if (!running && !reloading && (currentSubmachinegunAmmo != submachinegunMaxAmmo & submachineAmmo != 0))
+                {
+                    StartCoroutine(Reloading(gun));
+                }
+                break;
+            case "rifle":
+                if (!running && !reloading && (currentRifleAmmo != rifleMaxAmmo & rifleAmmo != 0))
+                {
+                    StartCoroutine(Reloading(gun));
+                }
+                break;
+        }
     }
     public void OnPointerDown()
     {
