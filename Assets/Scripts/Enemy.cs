@@ -4,6 +4,8 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] AudioSource deadsound;
+    [SerializeField] ParticleSystem _particleSys;
     [SerializeField] private Collider colider;
     [SerializeField] string RunType;
     [SerializeField] Animator animator;
@@ -49,6 +51,11 @@ public class Enemy : MonoBehaviour
         }
         if (health < 0)
         {
+            if (!dead)
+            {
+                deadsound.Play();
+                _particleSys.Play();
+            }
             colider.enabled = false;
             dead = true;
             animator.SetInteger("Death", deathtype);

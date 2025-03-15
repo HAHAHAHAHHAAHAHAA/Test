@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     private string weaponAnimationName;
     private string idleweaponAnimationName;
     private string reloadAnimationName;
-
+    
     [SerializeField] private GameObject shootButton;
     public Vector3 playerPos;
     [SerializeField] private int health=25;
@@ -49,6 +49,7 @@ public class Player : MonoBehaviour
     [SerializeField] private int pistolDamage;
     [SerializeField] private float pistolfireRate;
     [SerializeField] private float pistolReloadSpeed;
+    [SerializeField] private ParticleSystem pistolParticle;
 
     [SerializeField] private GameObject shotgun;
     public int shotgunAmmo;
@@ -57,6 +58,7 @@ public class Player : MonoBehaviour
     [SerializeField] private int shotgunDamage;
     [SerializeField] private float shotgunFireRate;
     [SerializeField] private float shotgunReloadSpeed;
+    [SerializeField] private ParticleSystem shotgunParticle;
 
     [SerializeField] private GameObject submachinegun;
     public int submachineAmmo;
@@ -65,6 +67,7 @@ public class Player : MonoBehaviour
     [SerializeField] private int submachinegunDamage;
     [SerializeField] private float submachinegunFireRate;
     [SerializeField] private float submachinegunReloadSpeed;
+    [SerializeField] private ParticleSystem submachinegunParticle;
 
     [SerializeField] private GameObject rifle;
     public int rifleAmmo;
@@ -73,6 +76,7 @@ public class Player : MonoBehaviour
     [SerializeField] private int rifleDamage;
     [SerializeField] private float rifleFireRate;
     [SerializeField] private float rifleReloadSpeed;
+    [SerializeField] private ParticleSystem rifleParticle;
 
 
     [SerializeField] private RectTransform background;
@@ -301,6 +305,7 @@ public class Player : MonoBehaviour
                 //ammo_UI.text = currentPistolAmmo.ToString() + "/" + pistolAmmo;
                 if (currentPistolAmmo >= 1 && !TakingTimeToNextShot)
                 {
+                    pistolParticle.Play();
                     PlayAnimation(weaponAnimationName);
                     pistolSound.pitch = Random.Range(.9f, 1);
                     pistolSound.Play();
@@ -338,6 +343,7 @@ public class Player : MonoBehaviour
 
                 if (currentShotgunAmmo >= 1 && !TakingTimeToNextShot)
                 {
+                    shotgunParticle.Play();
                     PlayAnimation(weaponAnimationName);
                     shotgunSound.pitch = Random.Range(.9f, 1);
                     shotgunSound.Play();
@@ -392,6 +398,7 @@ public class Player : MonoBehaviour
                 //ammo_UI.text = currentSubmachinegunAmmo.ToString() + "/" + submachineAmmo;
                 if (currentSubmachinegunAmmo >= 1 && !TakingTimeToNextShot)
                 {
+                    submachinegunParticle.Play();
                     PlayAnimation(weaponAnimationName);
                     submachinegunSound.pitch = Random.Range(.9f, 1);
                     submachinegunSound.Play();
@@ -428,6 +435,7 @@ public class Player : MonoBehaviour
                 //ammo_UI.text = currentRifleAmmo.ToString() + "/" + rifleAmmo;
                 if (currentRifleAmmo >= 1 && !TakingTimeToNextShot)
                 {
+                    rifleParticle.Play();
                     PlayAnimation(weaponAnimationName);
                     rifleSound.pitch = Random.Range(.9f, 1);
                     rifleSound.Play();
