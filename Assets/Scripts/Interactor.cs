@@ -32,7 +32,6 @@ public class Interactor : MonoBehaviour
         player.shotgunAmmo += shotgunAmmo;
         player.submachineAmmo += submachinegunAmmo;
         player.rifleAmmo += rifleAmmo;
-        player.SwitchGun(player.gun);
     }
     public void InteractionOut()
     {

@@ -8,6 +8,9 @@ using Image = UnityEngine.UI.Image;
 public class Player : MonoBehaviour
 {
     [SerializeField] Animator animator;
+    private string weaponAnimationName;
+    private string idleweaponAnimationName;
+    private string reloadAnimationName;
 
     [SerializeField] private GameObject shootButton;
     public Vector3 playerPos;
@@ -30,13 +33,13 @@ public class Player : MonoBehaviour
     [SerializeField] private float moveSpeed = 3.5f;
     [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private TextMeshProUGUI ammo_UI;
-
+    
     public int money;
     public int metal;
     public int cloth;
  
     private bool isShooting;
-    public string gun;
+    public string gun = "pistol";
 
     [SerializeField] private GameObject pistol;
     public int pistolAmmo;
@@ -92,7 +95,6 @@ public class Player : MonoBehaviour
         {
             lineRenderer = gameObject.AddComponent<LineRenderer>();
         }
-        SwitchGun("pistol");
     }
 
     private void FixedUpdate()
@@ -150,6 +152,7 @@ public class Player : MonoBehaviour
         if (rotationDirection == Vector3.zero)
         {
             aiming=false;
+            animator.SetBool("Aiming", false);
             joystickMove_UIButton.SetActive(true);
             if (movementDirection != Vector3.zero)
             {
@@ -162,6 +165,7 @@ public class Player : MonoBehaviour
         if (rotationDirection != Vector3.zero)
         {
             aiming = true;
+            animator.SetBool("Aiming", true);
             background.gameObject.SetActive(false);
             joystickMove_UIButton.SetActive(false);
             ResetJoystickInput();
@@ -177,6 +181,7 @@ public class Player : MonoBehaviour
             lineRenderer.SetPosition(1, lineEnd.position);
             shootButton.SetActive(true);
             animator.SetBool("Run", false);
+
         }
         // Движение
         if (movementDirection != Vector3.zero && aiming == false)
@@ -206,24 +211,40 @@ public class Player : MonoBehaviour
                     submachinegun.SetActive(false);
                     rifle.SetActive(false);
                     shotgun.SetActive(false);
+                    weaponAnimationName = "Pistol";
+                    reloadAnimationName = "ReloadPistol";
+                    idleweaponAnimationName = "Pistol 0";
+                    animator.SetInteger("Weapon", 1);
                     break;
                 case "shotgun":
                     shotgun.SetActive(true);
                     pistol.SetActive(false);
                     rifle.SetActive(false);
                     submachinegun.SetActive(false);
+                    weaponAnimationName = "Shotgun";
+                    reloadAnimationName = "ReloadShotgun";
+                    idleweaponAnimationName = "Shotgun 0";
+                    animator.SetInteger("Weapon", 2);
                     break;
                 case "submachinegun":
                     submachinegun.SetActive(true);
                     pistol.SetActive(false);
                     rifle.SetActive(false);
                     shotgun.SetActive(false);
+                    weaponAnimationName = "Submachine";
+                    reloadAnimationName = "ReloadSubmachine";
+                    idleweaponAnimationName = "Submachine 0";
+                    animator.SetInteger("Weapon", 3);
                     break;
                 case "rifle":
                     rifle.SetActive(true);
                     pistol.SetActive(false);
                     submachinegun.SetActive(false);
                     shotgun.SetActive(false);
+                    weaponAnimationName = "Rifle";
+                    reloadAnimationName = "ReloadRifle";
+                    idleweaponAnimationName = "Rifle 0";
+                    animator.SetInteger("Weapon", 4);
                     break;
             }
         }
@@ -249,6 +270,7 @@ public class Player : MonoBehaviour
                 //ammo_UI.text = currentPistolAmmo.ToString() + "/" + pistolAmmo;
                 if (currentPistolAmmo >= 1 && !TakingTimeToNextShot)
                 {
+                    PlayAnimation(weaponAnimationName);
                     pistolSound.pitch = Random.Range(.9f, 1);
                     pistolSound.Play();
                     // Выполняем Raycast только для получения информации о попадании
@@ -285,6 +307,7 @@ public class Player : MonoBehaviour
 
                 if (currentShotgunAmmo >= 1 && !TakingTimeToNextShot)
                 {
+                    PlayAnimation(weaponAnimationName);
                     shotgunSound.pitch = Random.Range(.9f, 1);
                     shotgunSound.Play();
                     // Определяем количество лучей и их угол
@@ -338,6 +361,7 @@ public class Player : MonoBehaviour
                 //ammo_UI.text = currentSubmachinegunAmmo.ToString() + "/" + submachineAmmo;
                 if (currentSubmachinegunAmmo >= 1 && !TakingTimeToNextShot)
                 {
+                    PlayAnimation(weaponAnimationName);
                     submachinegunSound.pitch = Random.Range(.9f, 1);
                     submachinegunSound.Play();
                     // Выполняем Raycast только для получения информации о попадании
@@ -373,6 +397,7 @@ public class Player : MonoBehaviour
                 //ammo_UI.text = currentRifleAmmo.ToString() + "/" + rifleAmmo;
                 if (currentRifleAmmo >= 1 && !TakingTimeToNextShot)
                 {
+                    PlayAnimation(weaponAnimationName);
                     rifleSound.pitch = Random.Range(.9f, 1);
                     rifleSound.Play();
                     // Выполняем Raycast только для получения информации о попадании
@@ -408,6 +433,7 @@ public class Player : MonoBehaviour
     IEnumerator Reloading(string gunType)
     {
         reloading = true;
+        PlayAnimation(reloadAnimationName);
         reloadSound.Play();
         switch (gunType)
         {
@@ -514,8 +540,23 @@ public class Player : MonoBehaviour
 
         yield return new WaitForSeconds(timeToShoot);
         TakingTimeToNextShot = false;
-
     }
+
+
+
+    // ----------УПРАВЛЕНИЕ АНИМАЦИЯМИ----------//НАЧАЛО
+
+    public void PlayAnimation(string animationName)
+    {
+        animator.speed = 1f;
+        animator.Play(animationName, 0, 0.15f);
+    }
+    private void StopAnimationAtStart(string animationName) // ПОКА НЕ НУЖНО 
+    {
+        animator.Play(animationName, 0, 0f); // Воспроизводит анимацию с самого начала 
+    }
+
+    // ----------УПРАВЛЕНИЕ АНИМАЦИЯМИ----------//КОНЕЦ
 
     public void Damage(int dmg)
     {
