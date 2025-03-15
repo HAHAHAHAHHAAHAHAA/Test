@@ -189,6 +189,7 @@ public class Player : MonoBehaviour
             shootButton.SetActive(true);
             animator.SetBool("Run", false);
 
+
         }
         // Движение
         if (movementDirection != Vector3.zero && aiming == false&&!reloading)

@@ -13,5 +13,6 @@ public class ActionScript : MonoBehaviour
         this.gameObject.tag = "Untagged";
         Destroy(this.gameObject.GetComponent<Collider>());
         Destroy(this.gameObject.GetComponent<ActionScript>());
+        Destroy(this.gameObject.GetComponent<ParticleSystem>());
     }
 }
