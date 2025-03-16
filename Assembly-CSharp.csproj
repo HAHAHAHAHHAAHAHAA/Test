@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\Enemy.cs" />
     <Compile Include="Assets\Scripts\MoveByHit.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
+    <Compile Include="Assets\Scripts\ShadowSimulator.cs" />
     <Compile Include="Assets\Scripts\1kevek\Bridge.cs" />
     <Compile Include="Assets\Scripts\PickItem.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FixedJoystick.cs" />
