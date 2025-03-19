@@ -31,13 +31,13 @@ public class Enemy : MonoBehaviour
 
         if (dist < 22f&&!dead)
         {
-            // Устанавливаем цель для NavMeshAgent
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ NavMeshAgent
             agent.SetDestination(player.playerPos);
 
-            // Получаем следующую позицию агента
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             Vector3 targetPosition = agent.nextPosition;
 
-            // Используем SmoothDamp для плавного перемещения
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ SmoothDamp пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
             animator.SetBool(RunType,true);
         }
