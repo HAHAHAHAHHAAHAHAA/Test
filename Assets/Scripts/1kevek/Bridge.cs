@@ -1,12 +1,12 @@
 using UnityEngine;
-using static ActionScript;
-using UnityEngine.AI;
 using Unity.AI.Navigation;
 using System.Collections;
 
 
 public class Bridge : BaseAction
 {
+    public GameObject bridgeControl1, bridgeControl2;
+    public GameObject idiotControll;
     public float rotationSpeed = 2f;
     private int count = 0;
     public NavMeshSurface navMeshSurface; // Добавили переменную для NavMeshSurface
@@ -21,7 +21,7 @@ public class Bridge : BaseAction
         if (count == 1)
         {
             float currentAngle = transform.eulerAngles.x;
-            float newAngle = Mathf.LerpAngle(currentAngle, -45, rotationSpeed * Time.deltaTime);
+            float newAngle = Mathf.LerpAngle(currentAngle, -25, rotationSpeed * Time.deltaTime);
             transform.eulerAngles = new Vector3(newAngle, transform.eulerAngles.y, transform.eulerAngles.z);
         }
         if (count == 2)
@@ -32,10 +32,19 @@ public class Bridge : BaseAction
                 isCoroutineStarted = true;
             }
             float currentAngle = transform.eulerAngles.x;
-            float newAngle = Mathf.LerpAngle(currentAngle, -91f, rotationSpeed * Time.deltaTime);
+            float newAngle = Mathf.LerpAngle(currentAngle, -111f, rotationSpeed * Time.deltaTime);
             transform.eulerAngles = new Vector3(newAngle, transform.eulerAngles.y, transform.eulerAngles.z);
+            StartCoroutine(Col());
 
         }
+    }
+    IEnumerator Col()
+    {
+        yield return new WaitForSeconds(0.8f);
+        idiotControll.SetActive(false);
+        bridgeControl1.SetActive(true);
+        bridgeControl2.SetActive(true);
+        Destroy(this.gameObject.GetComponent<Bridge>());
     }
 
     IEnumerator RebuildNavMeshWithDelay()
