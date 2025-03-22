@@ -4,13 +4,16 @@ public class Chest : Interactor, IInteractable
 {
     [SerializeField] private GameObject miniGamePrefab;
     public int money, metal, cloth, pistolAmmo, shotgunAmmo, submachinegunAmmo, rifleAmmo;
-    Player player;
+    [SerializeField] private Animator playerAnim;
+    [SerializeField] private Animator chestHead;
+    private Player player;
     void Start()
     {
-        Player player = FindObjectOfType<Player>();
+        player = FindObjectOfType<Player>();
     }
     public void Interact()
     {
+        
         GameObject miniGameInstance = Instantiate(miniGamePrefab);
         ChestMiniGame miniGame = miniGameInstance.GetComponent<ChestMiniGame>();
         player.enabled = false;
@@ -24,6 +27,8 @@ public class Chest : Interactor, IInteractable
     {
         Debug.Log("Победа");
         player.enabled = true;
+        playerAnim.Play("Closing");
+        chestHead.Play("OpenChest");
     }
     private void HandleLose()
     {
