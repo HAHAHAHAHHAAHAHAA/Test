@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\MoveByHit.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\ShadowSimulator.cs" />
+    <Compile Include="Assets\Scripts\1kevek\LeverLVL1.cs" />
     <Compile Include="Assets\Scripts\1kevek\Bridge.cs" />
     <Compile Include="Assets\Scripts\PickItem.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FixedJoystick.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Assets\Scripts\HideObject.cs" />
     <Compile Include="Assets\Vremenno\Trigger.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\DynamicJoystick.cs" />
+    <Compile Include="Assets\Scripts\1kevek\Level1Manager.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Base\Joystick.cs" />
     <Compile Include="Assets\Scripts\OpenDoor.cs" />
     <Compile Include="Assets\Joystick Pack\Examples\JoystickPlayerExample.cs" />
