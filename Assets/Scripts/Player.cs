@@ -88,7 +88,9 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioSource shotgunSound;
     [SerializeField] private AudioSource submachinegunSound;
     [SerializeField] private AudioSource rifleSound;
-
+    [SerializeField] private AudioSource WalkSound;
+    [SerializeField] float runsoundCD;
+    private float runsCD;
     private void ResetJoystickInput()
     {
         joystick.SetInputZero();
@@ -194,6 +196,14 @@ public class Player : MonoBehaviour
         // Движение
         if (movementDirection != Vector3.zero && aiming == false&&!reloading)
         {
+            runsCD = runsCD + 0.01f;
+            if (runsCD >= runsoundCD)
+            {
+                WalkSound.pitch = Random.Range(0.89f, 1.04f);
+                WalkSound.Play();
+                runsCD = 0;
+            }
+            
             running = true;
             animator.SetBool("Run", true);
             if (rotate == false)

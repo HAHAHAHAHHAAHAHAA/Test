@@ -17,7 +17,8 @@ public class Enemy : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
     public float smoothTime = 0.3f;
     private int deathtype;
-
+    [SerializeField] int spotRange;
+    [SerializeField] bool triggered=false;
     private bool dead = false;
     private void Start()
     {
@@ -28,8 +29,15 @@ public class Enemy : MonoBehaviour
     private void FixedUpdate()
     {
         float dist = Vector3.Distance(transform.position, player.playerPos);
-
-        if (dist < 22f&&!dead)
+        if(dist < spotRange && !dead)
+        {
+            triggered = true;
+        }
+        if (dist > spotRange*2.6 && !dead)
+        {
+            triggered = false;
+        }
+        if (triggered)
         {
             // ������������� ���� ��� NavMeshAgent
             agent.SetDestination(player.playerPos);
@@ -44,6 +52,7 @@ public class Enemy : MonoBehaviour
         else
         {
             animator.SetBool(RunType, false);
+            agent.Stop();
         }
         if (dist <= 1.2f&&!TakingTimeToNextBite&&!dead)
         {
