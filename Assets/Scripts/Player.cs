@@ -187,7 +187,22 @@ public class Player : MonoBehaviour
             lineRenderer.startWidth = 0.03f;
             lineRenderer.endWidth = 0.03f;
             lineRenderer.SetPosition(0, gunholder.position);
-            lineRenderer.SetPosition(1, lineEnd.position);
+
+            // Создаем LayerMask, которая *НЕ* включает слой TransparentFX
+            int layerMask = 1 << LayerMask.NameToLayer("TransparentFX"); // Создаем маску слоя TransparentFX
+            layerMask = ~layerMask; // Инвертируем маску, чтобы ИГНОРИРОВАТЬ этот слой
+
+            // Используем Raycast с настроенной LayerMask
+            RaycastHit hit;
+            if (Physics.Raycast(gunholder.position, gunholder.forward, out hit, Mathf.Infinity, layerMask))
+            {
+                lineRenderer.SetPosition(1, hit.point);
+            }
+            else
+            {
+                // Если ничего не найдено, то рисуем луч на какое-то расстояние
+                lineRenderer.SetPosition(1, gunholder.position + gunholder.forward * 100f);
+            }
             shootButton.SetActive(true);
             animator.SetBool("Run", false);
 
