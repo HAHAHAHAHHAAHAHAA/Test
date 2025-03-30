@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject shootButton;
     public Vector3 playerPos;
     [SerializeField] private int health=25;
+    [SerializeField] bool dead = false;
     [SerializeField] private TextMeshProUGUI health_UI;
     [SerializeField] private Transform lineEnd;
     private bool aiming = false;
@@ -107,7 +108,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-
+        if (dead) return;
         if (Input.GetKeyDown(KeyCode.Space))
         {
             OnPointerDown();
@@ -205,8 +206,6 @@ public class Player : MonoBehaviour
             }
             shootButton.SetActive(true);
             animator.SetBool("Run", false);
-
-
         }
         // Движение
         if (movementDirection != Vector3.zero && aiming == false&&!reloading)
@@ -232,6 +231,11 @@ public class Player : MonoBehaviour
         {
             running=false;
             animator.SetBool("Run", false);
+        }
+        if (health <= 0)
+        {
+            dead = true;
+            animator.Play("Dying1");
         }
     }
     public void SwitchGun(string gunType)

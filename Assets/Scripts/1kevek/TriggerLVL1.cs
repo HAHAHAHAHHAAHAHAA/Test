@@ -8,25 +8,25 @@ public class TriggerLVL1 : MonoBehaviour
     [SerializeField] Player player;
     [SerializeField] CameraFollow cameraf;
     [SerializeField] GameObject gameobj;
-    [SerializeField] Vector3 startPosition; // Начальная позиция
-    [SerializeField] Vector3 endPosition;   // Конечная позиция
-    [SerializeField] Quaternion startRotation; // Начальный поворот
-    [SerializeField] Quaternion endRotation;   // Конечный поворот
-    [SerializeField] float duration = 5f;      // Продолжительность перемещения
+    [SerializeField] Vector3 startPosition; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    [SerializeField] Vector3 endPosition;   // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    [SerializeField] Quaternion startRotation; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    [SerializeField] Quaternion endRotation;   // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    [SerializeField] float duration = 5f;      // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
     [SerializeField] GameObject gameobjC;
-    [SerializeField] Vector3 startPositionC; // Начальная позиция
-    [SerializeField] Vector3 endPositionC;   // Конечная позиция
-    [SerializeField] Quaternion startRotationC; // Начальный поворот
-    [SerializeField] Quaternion endRotationC;   // Конечный поворот
-    [SerializeField] float durationC = 5f;      // Продолжительность перемещения
-    private float elapsedTime = 0f;  // Прошедшее время
+    [SerializeField] Vector3 startPositionC; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    [SerializeField] Vector3 endPositionC;   // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    [SerializeField] Quaternion startRotationC; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    [SerializeField] Quaternion endRotationC;   // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    [SerializeField] float durationC = 5f;      // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    private float elapsedTime = 0f;  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     private float elapsedTimeC = 0f;
     private int davaidelai = 0;
     private int davaidelaiC = 0;
     void Start()
     {
-        // Устанавливаем начальные позицию и поворот
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         gameobj.transform.position = startPosition;
         gameobj.transform.rotation = startRotation;
     }
@@ -35,45 +35,45 @@ public class TriggerLVL1 : MonoBehaviour
     {
         if (elapsedTime < duration && davaidelai == 1)
         {
-            // Увеличиваем прошедшее время
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
             elapsedTime += Time.deltaTime;
 
-            // Вычисляем интерполяционный коэффициент
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             float t = Mathf.Clamp01(elapsedTime / duration);
 
-            // Плавно перемещаем объект
+            // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             gameobj.transform.position = Vector3.Lerp(startPosition, endPosition, t);
 
-            // Плавно поворачиваем объект
+            // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             gameobj.transform.rotation = Quaternion.Slerp(startRotation, endRotation, t);
         }
 
         if (elapsedTimeC < durationC && davaidelaiC == 1)
         {
-            // Увеличиваем прошедшее время
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
             elapsedTimeC += Time.deltaTime;
 
-            // Вычисляем интерполяционный коэффициент
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             float t = Mathf.Clamp01(elapsedTimeC / durationC);
 
-            // Плавно перемещаем объект
+            // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             gameobjC.transform.position = Vector3.Lerp(startPositionC, endPositionC, t);
 
-            // Плавно поворачиваем объект
+            // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             gameobjC.transform.rotation = Quaternion.Slerp(startRotationC, endRotationC, t);
         }
         if (elapsedTimeC < durationC && davaidelaiC == 2)
         {
-            // Увеличиваем прошедшее время
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
             elapsedTimeC += Time.deltaTime;
 
-            // Вычисляем интерполяционный коэффициент
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             float t = Mathf.Clamp01(elapsedTimeC / durationC);
 
-            // Плавно перемещаем объект
+            // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             gameobjC.transform.position = Vector3.Lerp(endPositionC, startPositionC, t);
 
-            // Плавно поворачиваем объект
+            // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             gameobjC.transform.rotation = Quaternion.Slerp(endRotationC, startRotationC, t);
         }
     }
@@ -96,9 +96,9 @@ public class TriggerLVL1 : MonoBehaviour
         yield return new WaitForSeconds(1f);
         davaidelaiC = 1;
         yield return new WaitForSeconds(.1f);
-        mut1.SetBool("Scream", true);
+        mut1.Play("Scream");
         yield return new WaitForSeconds(.3f);
-        mut2.SetBool("Scream", true);
+        mut2.Play("Scream");
         yield return new WaitForSeconds(1.6f);
         elapsedTimeC = 0;
         davaidelaiC = 2;

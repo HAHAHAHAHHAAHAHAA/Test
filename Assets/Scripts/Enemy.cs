@@ -28,6 +28,7 @@ public class Enemy : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if (dead) return;
         float dist = Vector3.Distance(transform.position, player.playerPos);
         if(dist < spotRange && !dead)
         {
@@ -37,8 +38,9 @@ public class Enemy : MonoBehaviour
         {
             triggered = false;
         }
-        if (triggered)
+        if (triggered && !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
         {
+            agent.isStopped = false;
             // ������������� ���� ��� NavMeshAgent
             agent.SetDestination(player.playerPos);
 
@@ -52,7 +54,7 @@ public class Enemy : MonoBehaviour
         else
         {
             animator.SetBool(RunType, false);
-            agent.Stop();
+            agent.isStopped = true;
         }
         if (dist <= 1.2f&&!TakingTimeToNextBite&&!dead)
         {
@@ -78,6 +80,7 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Bite()
     {
+        animator.Play("Attack");
         TakingTimeToNextBite = true;
         player.Damage(biteDamage);
         yield return new WaitForSeconds(2f);
