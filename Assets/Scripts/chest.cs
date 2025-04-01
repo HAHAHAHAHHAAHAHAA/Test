@@ -26,13 +26,13 @@ public class Chest : Interactor, IInteractable
     private void HandleWin()
     {
         Debug.Log("Победа");
-        player.enabled = true;
         playerAnim.Play("Closing");
         chestHead.Play("OpenChest");
+        player.StartCoroutine(player.StopPlayer(2));
     }
     private void HandleLose()
     {
         Debug.Log("поражение");
-        player.enabled = true;
+        player.StartCoroutine(player.StopPlayer(2));
     }
 }
