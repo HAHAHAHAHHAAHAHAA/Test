@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\ChestMiniGame.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FloatingJoystick.cs" />
     <Compile Include="Assets\Scripts\Platform.cs" />
+    <Compile Include="Assets\Vremenno\SoundTester.cs" />
     <Compile Include="Assets\Scripts\1kevek\CutScenelevel1.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
     <Compile Include="Assets\Scripts\MoveByHit.cs" />
