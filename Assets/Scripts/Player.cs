@@ -27,6 +27,8 @@ public class Player : MonoBehaviour
     [SerializeField] private ParticleSystem explosionParticles;
     [SerializeField] private ParticleSystem bloodParticles;
     [SerializeField] private Transform gunholder;
+    [SerializeField] private Transform gunholderP, gunholderS, gunholderSM, gunholderR;
+    [SerializeField] private Transform gunholderRaycast;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private FloatingJoystick joystickMove;
     [SerializeField] private GameObject joystickMove_UIButton;
@@ -185,9 +187,25 @@ public class Player : MonoBehaviour
 
             // ������ ����� �� gunholder � ����������� �������
             lineRenderer.positionCount = 2;
-            lineRenderer.startWidth = 0.03f;
+            lineRenderer.startWidth = 0.01f;
             lineRenderer.endWidth = 0.03f;
-            lineRenderer.SetPosition(0, gunholder.position);
+
+                switch (gun)
+                {
+                    case "pistol":
+                        lineRenderer.SetPosition(0, gunholderP.position);
+                        break;
+                    case "shotgun":
+                        lineRenderer.SetPosition(0, gunholderS.position);
+                        break;
+                    case "submachinegun":
+                        lineRenderer.SetPosition(0, gunholderSM.position);
+                        break;
+                    case "rifle":
+                        lineRenderer.SetPosition(0, gunholderR.position);
+                        break;
+                }
+           
 
             // Создаем LayerMask, которая *НЕ* включает слой TransparentFX
             int layerMask = 1 << LayerMask.NameToLayer("TransparentFX"); // Создаем маску слоя TransparentFX
@@ -195,14 +213,16 @@ public class Player : MonoBehaviour
 
             // Используем Raycast с настроенной LayerMask
             RaycastHit hit;
-            if (Physics.Raycast(gunholder.position, gunholder.forward, out hit, Mathf.Infinity, layerMask))
+            if (Physics.Raycast(gunholderRaycast.position, gunholder.forward, out hit, Mathf.Infinity, layerMask))
             {
-                lineRenderer.SetPosition(1, hit.point);
+               
+                   lineRenderer.SetPosition(1, hit.point);
             }
             else
             {
                 // Если ничего не найдено, то рисуем луч на какое-то расстояние
-                lineRenderer.SetPosition(1, gunholder.position + gunholder.forward * 100f);
+               
+                    lineRenderer.SetPosition(1, gunholder.position + gunholder.forward * 100f);
             }
             shootButton.SetActive(true);
             animator.SetBool("Run", false);
@@ -355,7 +375,7 @@ public class Player : MonoBehaviour
                     else
                     {
                         // Если не попали в врага, просто вызываем ShootCor с параметром false
-                        StartCoroutine(ShootCor(hitDetected ? hit.point : gunholder.position + gunholder.forward * 1000, hit.collider, false, pistolfireRate, pistolDamage));
+                        StartCoroutine(ShootCor(hitDetected ? hit.point : gunholder.position + gunholder.forward * 100, hit.collider, false, pistolfireRate, pistolDamage));
                     }
                     // Уменьшаем количество патронов
                     currentPistolAmmo--;
@@ -407,7 +427,7 @@ public class Player : MonoBehaviour
                         else
                         {
                             // Если не попали в врага, просто вызываем ShootCor с параметром false
-                            StartCoroutine(ShootCor(hitDetected ? hit4.point : gunholder.position + rayDirection * 1000, hit4.collider, false, shotgunFireRate, shotgunDamage));
+                            StartCoroutine(ShootCor(hitDetected ? hit4.point : gunholder.position + rayDirection * 100, hit4.collider, false, shotgunFireRate, shotgunDamage));
 
                         }
                     }
@@ -448,7 +468,7 @@ public class Player : MonoBehaviour
                     else
                     {
                         // Если не попали в врага, просто вызываем ShootCor с параметром false
-                        StartCoroutine(ShootCor(hitDetected ? hit2.point : gunholder.position + gunholder.forward * 1000, hit2.collider, false, submachinegunFireRate, submachinegunDamage));
+                        StartCoroutine(ShootCor(hitDetected ? hit2.point : gunholder.position + gunholder.forward * 100, hit2.collider, false, submachinegunFireRate, submachinegunDamage));
                     }
                     // Уменьшаем количество патронов
                     currentSubmachinegunAmmo--;
@@ -485,7 +505,7 @@ public class Player : MonoBehaviour
                     else
                     {
                         // Если не попали в врага, просто вызываем ShootCor с параметром false
-                        StartCoroutine(ShootCor(hitDetected ? hit3.point : gunholder.position + gunholder.forward * 1000, hit3.collider, false, rifleFireRate, rifleDamage));
+                        StartCoroutine(ShootCor(hitDetected ? hit3.point : gunholder.position + gunholder.forward * 100, hit3.collider, false, rifleFireRate, rifleDamage));
                     }
                     // Уменьшаем количество патронов
                     currentRifleAmmo--;
@@ -502,6 +522,7 @@ public class Player : MonoBehaviour
     IEnumerator Reloading(string gunType)
     {
         reloading = true;
+        lineRenderer.enabled = false;
         PlayAnimation(reloadAnimationName);
         reloadSound.Play();
         switch (gunType)
@@ -576,7 +597,9 @@ public class Player : MonoBehaviour
                 break;
         }
         ;
+        lineRenderer.enabled = true;
         reloading = false;
+        
     }
     IEnumerator ShootCor(Vector3 hitPoint, Collider hitCollider, bool isEnemyWasHit, float timeToShoot, int damage)
     {
