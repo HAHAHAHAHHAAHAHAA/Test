@@ -648,6 +648,12 @@ public class Player : MonoBehaviour
         animator.Play(animationName, 0, 0f); // Воспроизводит анимацию с самого начала 
     }
 
+    public IEnumerator StopPlayer(int time)
+    {
+        enabled = false;
+        yield return new WaitForSeconds(time);
+        enabled = true;
+    }
     // ----------УПРАВЛЕНИЕ АНИМАЦИЯМИ----------//КОНЕЦ
 
     public void Damage(int dmg)
