@@ -93,6 +93,18 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioSource rifleSound;
     [SerializeField] private AudioSource WalkSound;
     [SerializeField] float runsoundCD;
+    [SerializeField] private GameObject groundChecker;
+    [SerializeField] AudioClip[] pistolClips;
+    [SerializeField] AudioClip[] walkClips;
+    [SerializeField] AudioClip[] walkClips2;
+    [SerializeField] AudioClip[] walkClips3;
+    private AudioClip[] shuffledWalkClips;
+    private AudioClip[] shuffledWalkClips2;
+    private AudioClip[] shuffledWalkClips3;
+    private AudioClip[] shuffledPistolClips;
+    private int currentWalkClipIndex = 0;
+    private int currentPistolClipIndex = 0;
+
     private float runsCD;
     private void ResetJoystickInput()
     {
@@ -230,14 +242,6 @@ public class Player : MonoBehaviour
         // Движение
         if (movementDirection != Vector3.zero && aiming == false&&!reloading)
         {
-            runsCD = runsCD + 0.01f;
-            if (runsCD >= runsoundCD)
-            {
-                WalkSound.pitch = Random.Range(0.89f, 1.04f);
-                WalkSound.Play();
-                runsCD = 0;
-            }
-            
             running = true;
             animator.SetBool("Run", true);
             if (rotate == false)
@@ -257,6 +261,50 @@ public class Player : MonoBehaviour
             dead = true;
             animator.Play("Dying1");
         }
+    }
+    public void Steps()
+    {
+        if (Physics.Raycast(groundChecker.transform.position, Vector3.down, out RaycastHit hit, 2f))
+        {
+            string surfaceTag = hit.collider.tag;
+
+            // Выбираем массив звуков в зависимости от тега
+            AudioClip[] clipsToUse = surfaceTag switch
+            {
+                "GroundType1" => walkClips,
+                "GroundType2" => walkClips2,
+                "GroundType3" => walkClips3,
+                _ => walkClips
+            };
+            AudioClip[] shuffleUse = surfaceTag switch
+            {
+                "GroundType1" => shuffledWalkClips,
+                "GroundType2" => shuffledWalkClips2,
+                "GroundType3" => shuffledWalkClips3,
+                _ => shuffledWalkClips
+            };
+
+            if (shuffleUse == null || currentWalkClipIndex >= shuffleUse.Length)
+            {
+                shuffleUse = (AudioClip[])clipsToUse.Clone();
+
+                // Алгоритм Фишера-Йетса для перемешивания
+                for (int i = 0; i < shuffleUse.Length; i++)
+                {
+                    int rnd = Random.Range(i, shuffleUse.Length);
+                    AudioClip temp = shuffleUse[i];
+                    shuffleUse[i] = shuffleUse[rnd];
+                    shuffleUse[rnd] = temp;
+                    currentWalkClipIndex = 0;
+                }
+            }
+
+            WalkSound.pitch = Random.Range(0.95f, 1f);
+            WalkSound.clip = shuffleUse[currentWalkClipIndex++];
+            WalkSound.Play();
+        }
+        // Если дошли до конца массива или еще не инициализировали - перемешиваем
+        
     }
     public void SwitchGun(string gunType)
     {
@@ -381,7 +429,25 @@ public class Player : MonoBehaviour
                     // Уменьшаем количество патронов
                     currentPistolAmmo--;
                     // Проверяем, нужно ли перезаряжаться
-                    
+                    if (shuffledPistolClips == null || currentPistolClipIndex >= shuffledPistolClips.Length)
+                    {
+                        shuffledPistolClips = (AudioClip[])pistolClips.Clone();
+
+                        // Алгоритм Фишера-Йетса для перемешивания
+                        for (int i = 0; i < shuffledPistolClips.Length; i++)
+                        {
+                            int rnd = Random.Range(i, shuffledPistolClips.Length);
+                            AudioClip temp = shuffledPistolClips[i];
+                            shuffledPistolClips[i] = shuffledPistolClips[rnd];
+                            shuffledPistolClips[rnd] = temp;
+                            currentPistolClipIndex = 0;
+                        }
+                    }
+
+                    pistolSound.pitch = Random.Range(0.95f, 1f);
+                    pistolSound.clip = shuffledPistolClips[currentPistolClipIndex++];
+                    pistolSound.Play();
+
                 }
                 if (currentPistolAmmo <= 0 && !reloading && pistolAmmo != 0)
                 {
