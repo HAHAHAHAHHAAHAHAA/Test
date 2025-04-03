@@ -9,6 +9,8 @@ TagManager:
   - Interactable
   - Action
   - Object
+  - GroundType1
+  - GroundType2
   layers:
   - Default
   - TransparentFX
