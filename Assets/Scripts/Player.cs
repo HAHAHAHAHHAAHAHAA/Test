@@ -208,8 +208,8 @@ public class Player : MonoBehaviour
            
 
             // Создаем LayerMask, которая *НЕ* включает слой TransparentFX
-            int layerMask = 1 << LayerMask.NameToLayer("TransparentFX"); // Создаем маску слоя TransparentFX
-            layerMask = ~layerMask; // Инвертируем маску, чтобы ИГНОРИРОВАТЬ этот слой
+            int layerMask = 1 << LayerMask.NameToLayer("Default"); // Создаем маску слоя TransparentFX
+            //layerMask = ~layerMask; // Инвертируем маску, чтобы ИГНОРИРОВАТЬ этот слой
 
             // Используем Raycast с настроенной LayerMask
             RaycastHit hit;
@@ -348,6 +348,7 @@ public class Player : MonoBehaviour
     }
     private void Shoot()
     {
+        int layerMask = 1 << LayerMask.NameToLayer("Default");
         switch (gun)
         {
             case "pistol":
@@ -360,7 +361,7 @@ public class Player : MonoBehaviour
                     pistolSound.pitch = Random.Range(.9f, 1);
                     pistolSound.Play();
                     // Выполняем Raycast только для получения информации о попадании
-                    bool hitDetected = Physics.Raycast(gunholder.position, gunholder.forward, out hit);
+                    bool hitDetected = Physics.Raycast(gunholder.position, gunholder.forward, out hit, 100f,layerMask);
                     // Если попали в врага, вызываем ShootCor с параметром true
                     if (hitDetected && hit.collider.CompareTag("Enemy"))
                     {
@@ -410,7 +411,7 @@ public class Player : MonoBehaviour
                         Vector3 rayDirection = rotation * direction;
 
                         // Выполняем Raycast
-                        bool hitDetected = Physics.Raycast(gunholder.position, rayDirection, out hit4);
+                        bool hitDetected = Physics.Raycast(gunholder.position, rayDirection, out hit4, 100f, layerMask);
                         Color rayColor = hitDetected ? Color.red : Color.green; // Красный, если попали, зеленый, если нет
                         Debug.DrawRay(gunholder.position, rayDirection * 100, rayColor, 2f);
                         // Если попали в врага, вызываем ShootCor с параметром true
@@ -453,7 +454,7 @@ public class Player : MonoBehaviour
                     submachinegunSound.pitch = Random.Range(.9f, 1);
                     submachinegunSound.Play();
                     // Выполняем Raycast только для получения информации о попадании
-                    bool hitDetected = Physics.Raycast(gunholder.position, gunholder.forward, out hit2);
+                    bool hitDetected = Physics.Raycast(gunholder.position, gunholder.forward, out hit2, 100f, layerMask);
                     // Если попали в врага, вызываем ShootCor с параметром true
                     if (hitDetected && hit2.collider.CompareTag("Enemy"))
                     {
@@ -490,7 +491,7 @@ public class Player : MonoBehaviour
                     rifleSound.pitch = Random.Range(.9f, 1);
                     rifleSound.Play();
                     // Выполняем Raycast только для получения информации о попадании
-                    bool hitDetected = Physics.Raycast(gunholder.position, gunholder.forward, out hit3);
+                    bool hitDetected = Physics.Raycast(gunholder.position, gunholder.forward, out hit3, 100f, layerMask);
                     // Если попали в врага, вызываем ShootCor с параметром true
                     if (hitDetected && hit3.collider.CompareTag("Enemy"))
                     {
