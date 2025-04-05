@@ -726,5 +726,15 @@ public class Player : MonoBehaviour
     public void Damage(int dmg)
     {
         health -= dmg;
+        StartCoroutine(Slow(2));
+    }
+
+
+    IEnumerator Slow(int slow)
+    {
+        moveSpeed -= slow;
+        yield return new WaitForSeconds(1);
+        moveSpeed += slow;
+
     }
 }

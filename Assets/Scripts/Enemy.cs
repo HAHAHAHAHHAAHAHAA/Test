@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] int spotRange;
     [SerializeField] bool triggered=false;
     private bool dead = false;
+    [SerializeField] private int damageDelay;
     private void Start()
     {
         deathtype = Random.Range(1, 3);
@@ -82,6 +83,7 @@ public class Enemy : MonoBehaviour
     {
         animator.Play("Attack");
         TakingTimeToNextBite = true;
+        yield return new WaitForSeconds(damageDelay);
         player.Damage(biteDamage);
         yield return new WaitForSeconds(2f);
         TakingTimeToNextBite=false;
