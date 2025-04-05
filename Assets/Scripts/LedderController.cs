@@ -11,13 +11,13 @@ public class LedderController : Interactor, IInteractable
 
     private bool _isClimbing = false;
     [SerializeField] private Transform _player;
-    [SerializeField] private Rigidbody _playerRb;
+    [SerializeField] private CharacterController _playerController;
     private bool _isClimbingUp;          // Перемещается ли персонаж наверх
 
 
     public void Start()
     {
-        _playerRb = _player.GetComponent<Rigidbody>();
+        _playerController = _player.GetComponent<CharacterController>();
         if (playerController == null)
         {
             Debug.LogError("PlayerController не назначен!");
@@ -66,15 +66,17 @@ public class LedderController : Interactor, IInteractable
 
             while (Vector3.Distance(_player.position, targetPosition) > 0.1f)
             {
-                _playerRb.useGravity = false;
-                _player.position = Vector3.MoveTowards(_player.position, targetPosition, moveSpeed * Time.deltaTime);
+                //_playerRb.useGravity = false;
+                Vector3 direction = (targetPosition - _player.position).normalized;
+                _playerController.Move(direction * moveSpeed * Time.deltaTime);
                 yield return null;
             }
             // Плавное перемещение вперед
             Vector3 finalPosition = _player.position + transform.right * -stepDistance;
             while (Vector3.Distance(_player.position, finalPosition) > 0.1f)
             {
-                _player.position = Vector3.MoveTowards(_player.position, finalPosition, moveSpeed/2 * Time.deltaTime);
+                Vector3 direction = (finalPosition - _player.position).normalized;
+                _playerController.Move(direction * moveSpeed / 2 * Time.deltaTime);
                 yield return null;
             }
 
@@ -86,13 +88,14 @@ public class LedderController : Interactor, IInteractable
 
             while (Vector3.Distance(_player.position, targetPosition) > 0.1f)
             {
-                _player.position = Vector3.MoveTowards(_player.position, targetPosition, moveSpeed * Time.deltaTime);
+                Vector3 direction = (targetPosition - _player.position).normalized;
+                _playerController.Move(direction * moveSpeed * Time.deltaTime);
                 yield return null;
             }
         }
         _isClimbing = false;
         _isClimbingUp = false;
-        _playerRb.useGravity = true;
+        //_playerRb.useGravity = true;
         playerController.enabled = true; //Включаем управление игроком
     }
     public void Interact()

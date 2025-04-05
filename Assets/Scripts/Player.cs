@@ -29,7 +29,6 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform gunholder;
     [SerializeField] private Transform gunholderP, gunholderS, gunholderSM, gunholderR;
     [SerializeField] private Transform gunholderRaycast;
-    [SerializeField] private Rigidbody rb;
     [SerializeField] private FloatingJoystick joystickMove;
     [SerializeField] private GameObject joystickMove_UIButton;
     [SerializeField] private GameObject joystickAim_UIButton;
@@ -104,14 +103,16 @@ public class Player : MonoBehaviour
     private AudioClip[] shuffledPistolClips;
     private int currentWalkClipIndex = 0;
     private int currentPistolClipIndex = 0;
-
+    private CharacterController characterController;
     private float runsCD;
+    public float gravity = 5f;
     private void ResetJoystickInput()
     {
         joystick.SetInputZero();
     }
     private void Start()
     {
+        characterController = GetComponent<CharacterController>();
         SwitchGun("pistol");
         lineRenderer = GetComponent<LineRenderer>();
         if (lineRenderer == null)
@@ -122,6 +123,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        characterController.Move(Vector3.up * gravity * Time.fixedDeltaTime * -1);
         if (dead) return;
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -240,20 +242,23 @@ public class Player : MonoBehaviour
             animator.SetBool("Run", false);
         }
         // Движение
-        if (movementDirection != Vector3.zero && aiming == false&&!reloading)
+        if (movementDirection != Vector3.zero && !aiming && !reloading)
         {
             running = true;
             animator.SetBool("Run", true);
+
             if (rotate == false)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
             }
-            rb.MovePosition(transform.position + movementDirection * moveSpeed * Time.fixedDeltaTime);
+
+            // Используем CharacterController.Move()
+            characterController.Move(movementDirection * moveSpeed * Time.fixedDeltaTime);
         }
         else
         {
-            running=false;
+            running = false;
             animator.SetBool("Run", false);
         }
         if (health <= 0)
