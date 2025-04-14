@@ -18,8 +18,9 @@ public class LeverLVL1 : Interactor, IInteractable
     [SerializeField] Vector3 endPositionC;   // �������� �������
     [SerializeField] Quaternion startRotationC; // ��������� �������
     [SerializeField] Quaternion endRotationC;   // �������� �������
-    [SerializeField] float durationC = 5f;      // ����������������� �����������
-    [SerializeField] AudioSource DoorAudio;      // ����������������� �����������
+    [SerializeField] float durationC = 5f;
+    [SerializeField] AudioSource DoorAudio;
+    [SerializeField] AudioSource LeverAudio;
     private float elapsedTime = 0f;  // ��������� �����
     private float elapsedTimeC = 0f;
     private int davaidelai = 0;
@@ -88,6 +89,7 @@ public class LeverLVL1 : Interactor, IInteractable
     }
     IEnumerator Camera()
     {
+        LeverAudio.Play();
         davaidelaiC = 1;
         yield return new WaitForSeconds(2f);
         DoorAudio.Play();
