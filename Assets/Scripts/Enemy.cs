@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Animations.Rigging;
 
 public class Enemy : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] bool triggered=false;
     private bool dead = false;
     [SerializeField] private int damageDelay;
+    [SerializeField] Rig rig;
     private void Start()
     {
         deathtype = Random.Range(1, 3);
@@ -29,6 +31,10 @@ public class Enemy : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if (rig.weight > 0)
+        {
+            rig.weight -= 0.02f;
+        }
         if (dead) return;
         float dist = Vector3.Distance(transform.position, player.playerPos);
         if(dist < spotRange && !dead)
@@ -77,6 +83,7 @@ public class Enemy : MonoBehaviour
     public void Damage(int dmg)
     {
         health -= dmg;
+        rig.weight = 0.5f;
     }
 
     IEnumerator Bite()
