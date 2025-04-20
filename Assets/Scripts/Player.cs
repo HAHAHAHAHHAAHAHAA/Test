@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject shootButton;
     public Vector3 playerPos;
     [SerializeField] private int health=25;
+    [SerializeField] private Image healthbar;
+    [SerializeField] private Image healthbarPast;
     [SerializeField] bool dead = false;
     [SerializeField] private TextMeshProUGUI health_UI;
     [SerializeField] private Transform lineEnd;
@@ -43,6 +45,9 @@ public class Player : MonoBehaviour
  
     private bool isShooting;
     public string gun = "pistol";
+    [SerializeField] private Image gunsMenuImage;
+    [SerializeField] private GameObject gunsMenu;
+    [SerializeField] private GameObject gunsMenuButton;
 
     [SerializeField] private GameObject pistol;
     public int pistolAmmo;
@@ -52,6 +57,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float pistolfireRate;
     [SerializeField] private float pistolReloadSpeed;
     [SerializeField] private ParticleSystem pistolParticle;
+    [SerializeField] private Image pistolImage;
 
     [SerializeField] private GameObject shotgun;
     public int shotgunAmmo;
@@ -61,6 +67,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float shotgunFireRate;
     [SerializeField] private float shotgunReloadSpeed;
     [SerializeField] private ParticleSystem shotgunParticle;
+    [SerializeField] private Image shotgunImage;
 
     [SerializeField] private GameObject submachinegun;
     public int submachineAmmo;
@@ -70,6 +77,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float submachinegunFireRate;
     [SerializeField] private float submachinegunReloadSpeed;
     [SerializeField] private ParticleSystem submachinegunParticle;
+    [SerializeField] private Image submachinegunImage;
 
     [SerializeField] private GameObject rifle;
     public int rifleAmmo;
@@ -79,6 +87,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float rifleFireRate;
     [SerializeField] private float rifleReloadSpeed;
     [SerializeField] private ParticleSystem rifleParticle;
+    [SerializeField] private Image rifleImage;
 
 
     [SerializeField] private RectTransform background;
@@ -160,7 +169,7 @@ public class Player : MonoBehaviour
             isShooting = false;
         }
         playerPos = this.gameObject.transform.position;
-        health_UI.text=health.ToString()+"/25";
+        healthbar.fillAmount=health/25f;
         // �������� ������� ������ �� ����������
         float horizontalInput = joystickMove.Horizontal;
         float verticalInput = joystickMove.Vertical;
@@ -327,6 +336,9 @@ public class Player : MonoBehaviour
                     reloadAnimationName = "ReloadPistol";
                     idleweaponAnimationName = "Pistol 0";
                     animator.SetInteger("Weapon", 1);
+                    gunsMenu.SetActive(false);
+                    gunsMenuImage.sprite = pistolImage.sprite;
+                    gunsMenuButton.SetActive(true);
                     break;
                 case "shotgun":
                     shotgun.SetActive(true);
@@ -337,6 +349,9 @@ public class Player : MonoBehaviour
                     reloadAnimationName = "ReloadShotgun";
                     idleweaponAnimationName = "Shotgun 0";
                     animator.SetInteger("Weapon", 2);
+                    gunsMenu.SetActive(false);
+                    gunsMenuImage.sprite = shotgunImage.sprite;
+                    gunsMenuButton.SetActive(true);
                     break;
                 case "submachinegun":
                     submachinegun.SetActive(true);
@@ -347,6 +362,9 @@ public class Player : MonoBehaviour
                     reloadAnimationName = "ReloadSubmachine";
                     idleweaponAnimationName = "Submachine 0";
                     animator.SetInteger("Weapon", 3);
+                    gunsMenu.SetActive(false);
+                    gunsMenuImage.sprite = submachinegunImage.sprite;
+                    gunsMenuButton.SetActive(true);
                     break;
                 case "rifle":
                     rifle.SetActive(true);
@@ -357,9 +375,17 @@ public class Player : MonoBehaviour
                     reloadAnimationName = "ReloadRifle";
                     idleweaponAnimationName = "Rifle 0";
                     animator.SetInteger("Weapon", 4);
+                    gunsMenu.SetActive(false);
+                    gunsMenuImage.sprite=rifleImage.sprite;
+                    gunsMenuButton.SetActive(true);
                     break;
             }
         }
+    }
+    public void GunMenuButtonActivate()
+    {
+        gunsMenuButton.SetActive(false);
+        gunsMenu.SetActive(true);
     }
     public void Reload()
     {
@@ -739,6 +765,7 @@ public class Player : MonoBehaviour
     {
         moveSpeed -= slow;
         yield return new WaitForSeconds(1);
+        healthbarPast.fillAmount = health / 25f;
         moveSpeed += slow;
 
     }
