@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Image = UnityEngine.UI.Image;
-
+using DG.Tweening;
 public class Player : MonoBehaviour
 {
     [SerializeField] Animator animator;
@@ -42,7 +42,8 @@ public class Player : MonoBehaviour
     public int money;
     public int metal;
     public int cloth;
- 
+
+    [SerializeField] private GameObject shootTracer;
     private bool isShooting;
     public string gun = "pistol";
     [SerializeField] private Image gunsMenuImage;
@@ -703,6 +704,41 @@ public class Player : MonoBehaviour
     {
         TakingTimeToNextShot = true;
 
+        Sequence sequence = DOTween.Sequence();
+        var tracer = Instantiate(shootTracer);
+        Vector3 gnhldr = Vector3.zero;
+
+        switch (gun)
+        {
+            case "pistol":
+                gnhldr=gunholderP.position;
+                break;
+            case "shotgun":
+                gnhldr=gunholderS.position;
+                break;
+            case "submachinegun":
+                gnhldr = gunholderSM.position;
+                break;
+            case "rifle":
+                gnhldr = gunholderR.position;
+                break;
+        }
+        float disTr= Vector3.Distance(gnhldr, hitPoint);
+        Vector3 direction = hitPoint - gnhldr;
+        Quaternion rotation = Quaternion.LookRotation(direction);
+        tracer.transform.rotation = rotation;
+        // 1. Включаем и ставим в точку A
+        sequence.AppendCallback(() =>
+        {
+            tracer.transform.position = gnhldr;
+        });
+
+        // 2. Летим в точку B за 0.1 сек
+        sequence.Append(tracer.transform.DOMove(hitPoint, disTr/50));
+
+
+        // 4. Выключаем
+        sequence.AppendCallback(() => Destroy(tracer));
         if (isEnemyWasHit)
         {
             hitCollider.GetComponent<Enemy>().Damage(damage);
