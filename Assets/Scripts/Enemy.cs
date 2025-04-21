@@ -20,11 +20,16 @@ public class Enemy : MonoBehaviour
     public float smoothTime = 0.3f;
     private int deathtype;
     [SerializeField] int spotRange;
-    [SerializeField] bool triggered=false;
     private bool dead = false;
     [SerializeField] private int damageDelay;
-    [SerializeField] private bool _agredByDamage;
+
+    bool triggered = false;
+    private bool _agredByDamage;
     private Coroutine _damageAgrCoroutine;
+    [SerializeField] private float _agroRadius;
+    [SerializeField] private float _agroTime;
+
+
     [SerializeField] Rig rig;
     private void Start()
     {
@@ -111,7 +116,7 @@ public class Enemy : MonoBehaviour
 
     private void AggroNearbyEnemies()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 10);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, _agroRadius);
         List<Enemy> nearbyEnemies = new List<Enemy>();
 
         foreach (var hitCollider in hitColliders)
@@ -133,7 +138,7 @@ public class Enemy : MonoBehaviour
             }
 
             // Запускаем корутину и сохраняем ссылку
-            enemy._damageAgrCoroutine = enemy.StartCoroutine(enemy.DamageAgr(10));
+            enemy._damageAgrCoroutine = enemy.StartCoroutine(enemy.DamageAgr(_agroTime));
         }
     }
 }
