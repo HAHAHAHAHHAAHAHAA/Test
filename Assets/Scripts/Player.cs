@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Image = UnityEngine.UI.Image;
 using DG.Tweening;
+using System.Collections.Generic;
 public class Player : MonoBehaviour
 {
     [SerializeField] Animator animator;
@@ -116,6 +117,8 @@ public class Player : MonoBehaviour
     private CharacterController characterController;
     private float runsCD;
     public float gravity = 5f;
+    [SerializeField] private float _agroRadius;
+    [SerializeField] private float _agroTime;
     private void ResetJoystickInput()
     {
         joystick.SetInputZero();
@@ -703,7 +706,7 @@ public class Player : MonoBehaviour
     IEnumerator ShootCor(Vector3 hitPoint, Collider hitCollider, bool isEnemyWasHit, float timeToShoot, int damage)
     {
         TakingTimeToNextShot = true;
-
+        AggroNearbyEnemies(transform);
         Sequence sequence = DOTween.Sequence();
         var tracer = Instantiate(shootTracer);
         Vector3 gnhldr = Vector3.zero;
@@ -768,7 +771,33 @@ public class Player : MonoBehaviour
         TakingTimeToNextShot = false;
     }
 
+    public void AggroNearbyEnemies(Transform hitTransform)
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(hitTransform.position, _agroRadius);
+        List<Enemy> nearbyEnemies = new List<Enemy>();
 
+        foreach (var hitCollider in hitColliders)
+        {
+            Enemy enemy = hitCollider.GetComponent<Enemy>();
+            if (enemy != null && !enemy.dead)
+            {
+                nearbyEnemies.Add(enemy);
+            }
+        }
+
+        // Запускаем агр у всех найденных врагов
+        foreach (Enemy enemy in nearbyEnemies)
+        {
+            // Если корутина уже запущена, останавливаем её
+            if (enemy._damageAgrCoroutine != null)
+            {
+                enemy.StopCoroutine(enemy._damageAgrCoroutine);
+            }
+
+            // Запускаем корутину и сохраняем ссылку
+            enemy._damageAgrCoroutine = enemy.StartCoroutine(enemy.DamageAgr(_agroTime));
+        }
+    }
 
     // ----------УПРАВЛЕНИЕ АНИМАЦИЯМИ----------//НАЧАЛО
 

@@ -20,11 +20,14 @@ public class Enemy : MonoBehaviour
     public float smoothTime = 0.3f;
     private int deathtype;
     [SerializeField] int spotRange;
-    [SerializeField] bool triggered=false;
-    private bool dead = false;
+    public bool dead = false;
     [SerializeField] private int damageDelay;
-    [SerializeField] private bool _agredByDamage;
-    private Coroutine _damageAgrCoroutine;
+
+    bool triggered = false;
+    private bool _agredByDamage;
+    public Coroutine _damageAgrCoroutine;
+
+
     [SerializeField] Rig rig;
     private void Start()
     {
@@ -87,7 +90,7 @@ public class Enemy : MonoBehaviour
     {
         health -= dmg;
         rig.weight = 0.5f;
-        AggroNearbyEnemies();
+        player.AggroNearbyEnemies(transform);
     }
 
     IEnumerator Bite()
@@ -99,7 +102,7 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(2f);
         TakingTimeToNextBite=false;
     }
-    IEnumerator DamageAgr(float time)
+    public IEnumerator DamageAgr(float time)
     {
         _agredByDamage = true;
         triggered = true;
@@ -107,33 +110,5 @@ public class Enemy : MonoBehaviour
         Debug.Log("huynya");
         yield return new WaitForSeconds(time);
         _agredByDamage = false;
-    }
-
-    private void AggroNearbyEnemies()
-    {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 10);
-        List<Enemy> nearbyEnemies = new List<Enemy>();
-
-        foreach (var hitCollider in hitColliders)
-        {
-            Enemy enemy = hitCollider.GetComponent<Enemy>();
-            if (enemy != null && !enemy.dead)
-            {
-                nearbyEnemies.Add(enemy);
-            }
-        }
-
-        // Запускаем агр у всех найденных врагов
-        foreach (Enemy enemy in nearbyEnemies)
-        {
-            // Если корутина уже запущена, останавливаем её
-            if (enemy._damageAgrCoroutine != null)
-            {
-                enemy.StopCoroutine(enemy._damageAgrCoroutine);
-            }
-
-            // Запускаем корутину и сохраняем ссылку
-            enemy._damageAgrCoroutine = enemy.StartCoroutine(enemy.DamageAgr(10));
-        }
     }
 }
