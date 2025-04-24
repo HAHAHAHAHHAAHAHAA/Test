@@ -65635,6 +65635,8 @@ MonoBehaviour:
   shootButton: {fileID: 596452107}
   playerPos: {x: 0, y: 0, z: 0}
   health: 25
+  healthbar: {fileID: 0}
+  healthbarPast: {fileID: 0}
   dead: 0
   health_UI: {fileID: 886291547}
   lineEnd: {fileID: 142317341}
@@ -65658,7 +65660,11 @@ MonoBehaviour:
   money: 0
   metal: 0
   cloth: 0
+  shootTracer: {fileID: 0}
   gun: pistol
+  gunsMenuImage: {fileID: 0}
+  gunsMenu: {fileID: 0}
+  gunsMenuButton: {fileID: 0}
   pistol: {fileID: 172696225}
   pistolAmmo: 111
   currentPistolAmmo: 8
@@ -65667,6 +65673,7 @@ MonoBehaviour:
   pistolfireRate: 0.4
   pistolReloadSpeed: 1
   pistolParticle: {fileID: 1960146905}
+  pistolImage: {fileID: 0}
   shotgun: {fileID: 2057420782}
   shotgunAmmo: 12
   currentShotgunAmmo: 4
@@ -65675,6 +65682,7 @@ MonoBehaviour:
   shotgunFireRate: 1
   shotgunReloadSpeed: 2
   shotgunParticle: {fileID: 1478160898}
+  shotgunImage: {fileID: 0}
   submachinegun: {fileID: 1251721023}
   submachineAmmo: 111
   currentSubmachinegunAmmo: 13
@@ -65683,6 +65691,7 @@ MonoBehaviour:
   submachinegunFireRate: 0.1
   submachinegunReloadSpeed: 2.9
   submachinegunParticle: {fileID: 54439036}
+  submachinegunImage: {fileID: 0}
   rifle: {fileID: 1592012943}
   rifleAmmo: 111
   currentRifleAmmo: 13
@@ -65691,6 +65700,7 @@ MonoBehaviour:
   rifleFireRate: 0.25
   rifleReloadSpeed: 2.3
   rifleParticle: {fileID: 2011658627}
+  rifleImage: {fileID: 0}
   background: {fileID: 750284897}
   joystick: {fileID: 1299110870}
   reloadSound: {fileID: 2096696226}
@@ -65718,6 +65728,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4f416b2c5a1f3b94aaf0c8ce25e6ce82, type: 3}
   walkClips3: []
   gravity: 5
+  _agroRadius: 0
+  _agroTime: 0
 --- !u!114 &2096696222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69223,7 +69235,7 @@ Transform:
   m_GameObject: {fileID: 2873563338914199654}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.2377955, z: -0, w: 0.9713153}
-  m_LocalPosition: {x: -17.553, y: -0.37239486, z: -37.826}
+  m_LocalPosition: {x: -18.226, y: -0.37239486, z: -36.534}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
