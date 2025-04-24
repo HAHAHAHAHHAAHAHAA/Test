@@ -829,7 +829,7 @@ public class Player : MonoBehaviour
     IEnumerator Slow(int slow)
     {
         moveSpeed -= slow;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1f);
         healthbarPast.fillAmount = health / 25f;
         moveSpeed += slow;
 
