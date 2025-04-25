@@ -3,11 +3,16 @@ using UnityEngine.SceneManagement;
 
 public class NexLevel : MonoBehaviour
 {
+    [SerializeField] private string lvlName;
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if (SceneLoader.Instance == null)
         {
-            SceneManager.LoadScene(2);
+            new GameObject("SceneLoader").AddComponent<SceneLoader>();
+        }
+        if (other.CompareTag("Player"))
+        {
+            SceneLoader.Instance.LoadScene(lvlName);
         }
     }
 }

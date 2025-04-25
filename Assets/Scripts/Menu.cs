@@ -9,7 +9,7 @@ public class Menu : MonoBehaviour
     }
     public void NewGame()
     {
-        SceneManager.LoadScene(1);
+        SceneLoader.Instance.LoadScene("Sewers");
     }
     public void Countinue()
     {
