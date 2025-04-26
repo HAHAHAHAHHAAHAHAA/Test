@@ -21,7 +21,6 @@ public class Enemy : MonoBehaviour
     private int deathtype;
     [SerializeField] int spotRange;
     public bool dead = false;
-    [SerializeField] private int damageDelay;
 
     bool triggered = false;
     private bool _agredByDamage;
@@ -69,7 +68,7 @@ public class Enemy : MonoBehaviour
             animator.SetBool(RunType, false);
             agent.isStopped = true;
         }
-        if (dist <= 1.2f&&!TakingTimeToNextBite&&!dead)
+        if (dist <= 1.5f&&!TakingTimeToNextBite&&!dead)
         {
             animator.Play("Attack");
         }
@@ -97,7 +96,6 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log("Kuskus");
         TakingTimeToNextBite = true;
-        yield return new WaitForSeconds(damageDelay);
         player.Damage(biteDamage);
         yield return new WaitForSeconds(2f);
         TakingTimeToNextBite=false;
