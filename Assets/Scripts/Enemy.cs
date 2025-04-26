@@ -71,7 +71,7 @@ public class Enemy : MonoBehaviour
         }
         if (dist <= 1.2f&&!TakingTimeToNextBite&&!dead)
         {
-            StartCoroutine(Bite());
+            animator.Play("Attack");
         }
         if (health < 0)
         {
@@ -95,13 +95,14 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Bite()
     {
-        animator.Play("Attack");
+        Debug.Log("Kuskus");
         TakingTimeToNextBite = true;
         yield return new WaitForSeconds(damageDelay);
         player.Damage(biteDamage);
         yield return new WaitForSeconds(2f);
         TakingTimeToNextBite=false;
     }
+
     public IEnumerator DamageAgr(float time)
     {
         _agredByDamage = true;
