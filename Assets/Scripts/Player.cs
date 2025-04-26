@@ -60,6 +60,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float pistolReloadSpeed;
     [SerializeField] private ParticleSystem pistolParticle;
     [SerializeField] private Image pistolImage;
+    [SerializeField] private Restartpanel _showDiePanel;
 
     [SerializeField] private GameObject shotgun;
     public int shotgunAmmo;
@@ -132,6 +133,7 @@ public class Player : MonoBehaviour
         {
             lineRenderer = gameObject.AddComponent<LineRenderer>();
         }
+        _showDiePanel = FindFirstObjectByType<Restartpanel>();
     }
 
     private void FixedUpdate()
@@ -278,6 +280,7 @@ public class Player : MonoBehaviour
         {
             dead = true;
             animator.Play("Dying1");
+            _showDiePanel.ShowDiePanel();
         }
     }
     public void Steps()
