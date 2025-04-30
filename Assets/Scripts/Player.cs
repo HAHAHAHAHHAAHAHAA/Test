@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using Image = UnityEngine.UI.Image;
 using DG.Tweening;
 using System.Collections.Generic;
+using UnityEngine.Audio;
 public class Player : MonoBehaviour
 {
     [SerializeField] Animator animator;
@@ -104,8 +105,10 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioSource submachinegunSound;
     [SerializeField] private AudioSource rifleSound;
     [SerializeField] private AudioSource WalkSound;
+    private AudioSource lowHpSource;
     [SerializeField] float runsoundCD;
     [SerializeField] private GameObject groundChecker;
+    [SerializeField] private AudioClip lowHealthSound;
     [SerializeField] AudioClip[] pistolClips;
     [SerializeField] AudioClip[] walkClips;
     [SerializeField] AudioClip[] walkClips2;
@@ -135,6 +138,9 @@ public class Player : MonoBehaviour
             lineRenderer = gameObject.AddComponent<LineRenderer>();
         }
         _showDiePanel = FindFirstObjectByType<Restartpanel>();
+        lowHpSource = gameObject.AddComponent<AudioSource>();
+        lowHpSource.playOnAwake = false;
+        lowHpSource.loop = true;
     }
 
     private void FixedUpdate()
@@ -283,6 +289,7 @@ public class Player : MonoBehaviour
             animator.Play("Dying1");
             _showDiePanel.ShowDiePanel();
         }
+        CheckLowHealth();
     }
     public void Steps()
     {
@@ -826,7 +833,18 @@ public class Player : MonoBehaviour
     {
         if ((float)health / maxHealth <= 0.2f)
         {
-            Debug.Log("Внимание! Низкий уровень здоровья!");
+            if (!lowHpSource.isPlaying && lowHealthSound != null)
+            {
+                lowHpSource.clip = lowHealthSound;
+                lowHpSource.Play();
+            }
+        }
+        else
+        {
+            if (lowHpSource.isPlaying)
+            {
+                lowHpSource.Stop();
+            }
         }
     }
     public void Damage(int dmg)

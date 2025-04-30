@@ -118059,6 +118059,7 @@ MonoBehaviour:
   WalkSound: {fileID: 1936374672}
   runsoundCD: 0.25
   groundChecker: {fileID: 52503057}
+  lowHealthSound: {fileID: 8300000, guid: 0ed3368ae2813d04d9ae79cc1b340791, type: 3}
   pistolClips:
   - {fileID: 8300000, guid: e5b9867e4b5126043880d47e83177e18, type: 3}
   - {fileID: 8300000, guid: 1c17d02b55af3444ea1cca80e9d343dd, type: 3}
