@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     
     [SerializeField] private GameObject shootButton;
     public Vector3 playerPos;
+    [SerializeField] private int maxHealth=25;
     [SerializeField] private int health=25;
     [SerializeField] private Image healthbar;
     [SerializeField] private Image healthbarPast;
@@ -821,7 +822,13 @@ public class Player : MonoBehaviour
         enabled = true;
     }
     // ----------УПРАВЛЕНИЕ АНИМАЦИЯМИ----------//КОНЕЦ
-
+    public void CheckLowHealth()
+    {
+        if ((float)health / maxHealth <= 0.2f)
+        {
+            Debug.Log("Внимание! Низкий уровень здоровья!");
+        }
+    }
     public void Damage(int dmg)
     {
         health -= dmg;
