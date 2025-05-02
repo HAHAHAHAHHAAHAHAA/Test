@@ -26,8 +26,14 @@ public class Enemy : MonoBehaviour
     private bool _agredByDamage;
     public Coroutine _damageAgrCoroutine;
 
-
     [SerializeField] Rig rig;
+
+    [SerializeField] AudioClip[] walkClips;
+    [SerializeField] AudioClip[] walkClips2;
+    [SerializeField] AudioClip[] walkClips3;
+    [SerializeField] AudioSource audioSource;
+    private string currentGroundType = "GroundType1";
+
     private void Start()
     {
         deathtype = Random.Range(1, 3);
@@ -109,5 +115,65 @@ public class Enemy : MonoBehaviour
         Debug.Log("huynya");
         yield return new WaitForSeconds(time);
         _agredByDamage = false;
+    }
+    public void PlayRandomFootstepSound()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 1f))
+        {
+            if (hit.collider.CompareTag("GroundType1"))
+            {
+                currentGroundType = "GroundType1";
+            }
+            else if (hit.collider.CompareTag("GroundType2"))
+            {
+                currentGroundType = "GroundType2";
+            }
+            else if (hit.collider.CompareTag("GroundType3"))
+            {
+                currentGroundType = "GroundType3";
+            }
+            else
+            {
+                currentGroundType = null;
+            }
+        }
+        else
+        {
+            currentGroundType = null;
+        }
+
+        AudioClip[] clips = null;
+
+        if (currentGroundType == null) return;
+
+        switch (currentGroundType)
+        {
+            case "GroundType1":
+                clips = walkClips;
+                break;
+            case "GroundType2":
+                clips = walkClips2;
+                break;
+            case "GroundType3":
+                clips = walkClips3;
+                break;
+            default:
+                return;
+        }
+
+        if (clips != null && clips.Length > 0)
+        {
+            AudioClip clip = clips[Random.Range(0, clips.Length)];
+
+            if (audioSource != null)
+            {
+                audioSource.PlayOneShot(clip);
+            }
+            else
+            {
+                Debug.LogError("AudioSource is not assigned to the Enemy script!");
+            }
+        }
     }
 }
