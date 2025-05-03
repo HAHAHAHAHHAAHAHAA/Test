@@ -124,6 +124,7 @@ public class Player : MonoBehaviour
     public float gravity = 5f;
     [SerializeField] private float _agroRadius;
     [SerializeField] private float _agroTime;
+    [SerializeField] private AudioSource weaponSwap;
     private void ResetJoystickInput()
     {
         joystick.SetInputZero();
@@ -354,6 +355,7 @@ public class Player : MonoBehaviour
                     gunsMenu.SetActive(false);
                     gunsMenuImage.sprite = pistolImage.sprite;
                     gunsMenuButton.SetActive(true);
+                    weaponSwap.Play();
                     break;
                 case "shotgun":
                     shotgun.SetActive(true);
@@ -367,6 +369,7 @@ public class Player : MonoBehaviour
                     gunsMenu.SetActive(false);
                     gunsMenuImage.sprite = shotgunImage.sprite;
                     gunsMenuButton.SetActive(true);
+                    weaponSwap.Play();
                     break;
                 case "submachinegun":
                     submachinegun.SetActive(true);
@@ -380,6 +383,7 @@ public class Player : MonoBehaviour
                     gunsMenu.SetActive(false);
                     gunsMenuImage.sprite = submachinegunImage.sprite;
                     gunsMenuButton.SetActive(true);
+                    weaponSwap.Play();
                     break;
                 case "rifle":
                     rifle.SetActive(true);
@@ -393,6 +397,7 @@ public class Player : MonoBehaviour
                     gunsMenu.SetActive(false);
                     gunsMenuImage.sprite=rifleImage.sprite;
                     gunsMenuButton.SetActive(true);
+                    weaponSwap.Play();
                     break;
             }
         }
