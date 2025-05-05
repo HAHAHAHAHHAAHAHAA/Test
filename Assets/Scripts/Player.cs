@@ -7,8 +7,14 @@ using Image = UnityEngine.UI.Image;
 using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine.Audio;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 public class Player : MonoBehaviour
 {
+    [Header("Vignette")]
+    public Volume globalVolume;
+    private Vignette vignette;
+
     [SerializeField] Animator animator;
     private string weaponAnimationName;
     private string idleweaponAnimationName;
@@ -142,6 +148,10 @@ public class Player : MonoBehaviour
         lowHpSource = gameObject.AddComponent<AudioSource>();
         lowHpSource.playOnAwake = false;
         lowHpSource.loop = true;
+        if (globalVolume != null && globalVolume.profile.TryGet(out Vignette volVignette))
+        {
+            vignette = volVignette;
+        }
     }
 
     private void FixedUpdate()
@@ -836,8 +846,19 @@ public class Player : MonoBehaviour
     // ----------УПРАВЛЕНИЕ АНИМАЦИЯМИ----------//КОНЕЦ
     public void CheckLowHealth()
     {
-        if ((float)health / maxHealth <= 0.2f)
+        if (vignette == null) return;
+
+        float healthPercentage = (float)health / maxHealth;
+        bool isLowHealth = healthPercentage <= 0.2f;
+
+        if (isLowHealth)
         {
+            vignette.color.Override(Color.red);
+
+            float intensityTarget = 0.25f + Mathf.PingPong(Time.time * 0.25f, 0.35f);
+            vignette.intensity.Override(Mathf.Lerp(vignette.intensity.value, intensityTarget, 1f * Time.deltaTime));
+
+
             if (!lowHpSource.isPlaying && lowHealthSound != null)
             {
                 lowHpSource.clip = lowHealthSound;
@@ -846,6 +867,10 @@ public class Player : MonoBehaviour
         }
         else
         {
+            vignette.color.Override(Color.black);
+            vignette.intensity.Override(0.25f);
+
+
             if (lowHpSource.isPlaying)
             {
                 lowHpSource.Stop();
