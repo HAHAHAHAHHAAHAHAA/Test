@@ -75,6 +75,7 @@
     <Compile Include="Assets\Scripts\1kevek\LeverLVL1.cs" />
     <Compile Include="Assets\Scripts\1kevek\Bridge.cs" />
     <Compile Include="Assets\Scripts\PickItem.cs" />
+    <Compile Include="Assets\Scripts\Obuchenie.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FixedJoystick.cs" />
     <Compile Include="Assets\Scripts\1kevek\NonBridge.cs" />
     <Compile Include="Assets\Scripts\NexLevel.cs" />
