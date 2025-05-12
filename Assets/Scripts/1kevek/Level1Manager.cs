@@ -3,12 +3,12 @@ using UnityEngine;
 public class Level1Manager : MonoBehaviour
 {
     [SerializeField] GameObject gameobj;
-    [SerializeField] Vector3 startPosition; // Начальная позиция
-    [SerializeField] Vector3 endPosition;   // Конечная позиция
-    [SerializeField] Quaternion startRotation; // Начальный поворот
-    [SerializeField] Quaternion endRotation;   // Конечный поворот
-    [SerializeField] float duration = 2f;      // Продолжительность перемещения
-    private float elapsedTime = 0f;  // Прошедшее время
+    [SerializeField] Vector3 startPosition; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    [SerializeField] Vector3 endPosition;   // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    [SerializeField] Quaternion startRotation; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    [SerializeField] Quaternion endRotation;   // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    [SerializeField] float duration = 2f;      // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    private float elapsedTime = 0f;  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     private int davaidelai = 0;
 
     [SerializeField] GameObject leverb;
@@ -18,16 +18,16 @@ public class Level1Manager : MonoBehaviour
     {
         if (elapsedTime < duration && davaidelai == 1)
         {
-            // Увеличиваем прошедшее время
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
             elapsedTime += Time.deltaTime;
 
-            // Вычисляем интерполяционный коэффициент
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             float t = Mathf.Clamp01(elapsedTime / duration);
 
-            // Плавно перемещаем объект
+            // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             gameobj.transform.position = Vector3.Lerp(startPosition, endPosition, t);
 
-            // Плавно поворачиваем объект
+            // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             gameobj.transform.rotation = Quaternion.Slerp(startRotation, endRotation, t);
             leverb.SetActive(true);
             leverpre.SetActive(false);
