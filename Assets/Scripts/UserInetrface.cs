@@ -34,6 +34,6 @@ public class UserInetrface : MonoBehaviour
     }
     public void ExitToMainMenu()
     {
-        SceneManager.LoadScene(0);
+        SceneLoader.Instance.LoadScene("Menu");
     }
 }

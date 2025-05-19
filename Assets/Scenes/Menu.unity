@@ -631,7 +631,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadingSceneName: Loading
-  minLoadTime: 5
+  minLoadTime: 0
   progressBarName: ProgressBar
   progressTextName: ProgressText
 --- !u!4 &665692094
